@@ -1,4 +1,4 @@
-package Utils
+package utils
 
 import (
 	"fmt"
@@ -14,7 +14,7 @@ func ReadInputFile(day int) ([]string, error) {
 	data, err := os.ReadFile(fmt.Sprintf("./inputs/day%d.txt", day))
 
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("unable to open input file: %w", err)
 	}
 
 	return splitLinesByNewLine(string(data)), err

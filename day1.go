@@ -1,8 +1,10 @@
 package main
 
 import (
-	"AdventOfCode2021/Utils"
+	"AdventOfCode2021/utils"
 	"flag"
+	"fmt"
+	"log"
 	"strconv"
 )
 
@@ -20,11 +22,20 @@ func main() {
 	if *useTestInputs {
 		depths = []int{199, 200, 208, 210, 200, 207, 240, 269, 260, 263}
 	} else {
-		inputs, _ := Utils.ReadInputFile(1)
-		depths, _ = convertToDepths(inputs)
+		inputs, err := utils.ReadInputFile(1)
+
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		depths, err = convertToDepths(inputs)
+
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
 
-	Utils.PrintDayResults(1, part1(depths), part2(depths))
+	utils.PrintDayResults(1, part1(depths), part2(depths))
 }
 
 func part1(depths []int) int {
@@ -60,7 +71,7 @@ func convertToDepths(inputs []string) ([]int, error) {
 	for _, input := range inputs {
 		depth, err := strconv.Atoi(input)
 		if err != nil {
-			return nil, err
+			return nil, fmt.Errorf("unable to convert to depths: %w", err)
 		}
 
 		depths = append(depths, depth)
