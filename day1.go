@@ -69,6 +69,9 @@ func convertToDepths(inputs []string) ([]int, error) {
 	var depths []int
 
 	for _, input := range inputs {
+		if input == "" {
+			continue
+		}
 		depth, err := strconv.Atoi(input)
 		if err != nil {
 			return nil, fmt.Errorf("unable to convert to depths: %w", err)
