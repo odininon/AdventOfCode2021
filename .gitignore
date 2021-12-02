@@ -1,3 +1,4 @@
 .idea/
-inputs/.aocdlconfig
-inputs/aocdl.exe
+bin/.aocdlconfig
+bin/aocdl.exe
+bin/hygen.exe
