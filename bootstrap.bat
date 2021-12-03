@@ -1,4 +1,8 @@
 @echo off
 set day=%1
-.\bin\dl.bat %day%
-.\bin\hygen.exe day new --day %day%
+
+cd /D "%~dp0"
+call .\bin\dl.bat %day%
+
+cd /D "%~dp0"
+call .\bin\hygen.exe day new --day %day%
