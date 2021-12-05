@@ -23,3 +23,11 @@ func ReadInputFile(day int) ([]string, error) {
 func PrintDayResults(day int, part1 int, part2 int) {
 	fmt.Printf("==Day%v==\nPart1: %v, Part2: %v\n", day, part1, part2)
 }
+
+func MakeRange(min, max int) []int {
+	a := make([]int, max-min+1)
+	for i := range a {
+		a[i] = min + i
+	}
+	return a
+}

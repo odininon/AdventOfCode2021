@@ -48,7 +48,7 @@ func part2(depths []int) int {
 
 func calculateDepthWithSpan(depths []int, spanCount int) int {
 	count := 0
-	span := makeRange(0, spanCount-1)
+	span := utils.MakeRange(0, spanCount-1)
 
 	for i := 0; i < len(depths)-spanCount; i++ {
 		sum1 := 0
@@ -68,14 +68,6 @@ func calculateDepthWithSpan(depths []int, spanCount int) int {
 	}
 
 	return count
-}
-
-func makeRange(min, max int) []int {
-	a := make([]int, max-min+1)
-	for i := range a {
-		a[i] = min + i
-	}
-	return a
 }
 
 func convertToDepths(inputs []string) ([]int, error) {
