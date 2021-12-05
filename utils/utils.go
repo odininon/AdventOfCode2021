@@ -3,6 +3,7 @@ package utils
 import (
 	"fmt"
 	"os"
+	"regexp"
 	"strings"
 )
 
@@ -30,4 +31,17 @@ func MakeRange(min, max int) []int {
 		a[i] = min + i
 	}
 	return a
+}
+
+func MakeMapFromRegex(regex *regexp.Regexp, s string) map[string]string {
+	match := regex.FindStringSubmatch(s)
+
+	paramsMap := make(map[string]string)
+	for i, name := range regex.SubexpNames() {
+		if i > 0 && i <= len(match) {
+			paramsMap[name] = match[i]
+		}
+	}
+
+	return paramsMap
 }
