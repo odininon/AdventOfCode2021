@@ -4,6 +4,7 @@ to: day<%=day%>/main.go
 package main
 
 import (
+	"AdventOfCode2021/utils"
 	"flag"
 )
 
@@ -16,4 +17,19 @@ func init() {
 }
 
 func main() {
+	if *useTestInputs {
+
+	} else {
+
+	}
+
+	utils.PrintDayResults(<%=day%>, part1(), part2())
+}
+
+func part1() int {
+	return 0
+}
+
+func part2() int {
+	return 0
 }
