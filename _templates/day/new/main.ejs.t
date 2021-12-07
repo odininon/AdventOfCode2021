@@ -23,13 +23,13 @@ func main() {
 
 	}
 
-	utils.PrintDayResults(<%=day%>, part1(), part2())
+	utils.PrintDayResultsWithDuration(<%=day%>, part1(), part2())
 }
 
-func part1() int {
-	return 0
+func part1() utils.ResultWithTime {
+	return utils.ResultWithTime{}
 }
 
-func part2() int {
-	return 0
+func part2() utils.ResultWithTime {
+	return utils.ResultWithTime{}
 }
