@@ -5,6 +5,7 @@ import (
 	"os"
 	"regexp"
 	"strings"
+	"time"
 )
 
 func splitLinesByNewLine(lines string) []string {
@@ -22,6 +23,15 @@ func ReadInputFile(day int) ([]string, error) {
 }
 
 func PrintDayResults(day int, part1 int, part2 int) {
+	fmt.Printf("==Day%v==\nPart1: %v, Part2: %v\n", day, part1, part2)
+}
+
+type ResultWithTime struct {
+	Value    int
+	Duration time.Duration
+}
+
+func PrintDayResultsWithDuration(day int, part1 ResultWithTime, part2 ResultWithTime) {
 	fmt.Printf("==Day%v==\nPart1: %v, Part2: %v\n", day, part1, part2)
 }
 
