@@ -9,7 +9,7 @@ import (
 )
 
 var (
-	useTestInputs = flag.Bool("test", false, "Should we use the test inputs")
+	useTestInputs = flag.Bool("test", true, "Should we use the test inputs")
 )
 
 func init() {
