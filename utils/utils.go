@@ -8,8 +8,16 @@ import (
 	"time"
 )
 
-func splitLinesByNewLine(lines string) []string {
-	return strings.Split(strings.ReplaceAll(lines, "\r\n", "\n"), "\n")
+func splitLinesByNewLine(lines string) (parts []string) {
+	pieces := strings.Split(strings.ReplaceAll(lines, "\r\n", "\n"), "\n")
+
+	for _, piece := range pieces {
+		if piece != "" {
+			parts = append(parts, piece)
+		}
+	}
+
+	return
 }
 
 func ReadInputFile(day int) ([]string, error) {
