@@ -63,3 +63,13 @@ func MakeMapFromRegex(regex *regexp.Regexp, s string) map[string]string {
 
 	return paramsMap
 }
+
+func Sign(i int) int {
+	if i < 0 {
+		return -1
+	}
+	if i > 0 {
+		return 1
+	}
+	return 0
+}

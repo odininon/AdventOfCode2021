@@ -14,26 +14,16 @@ func init() {
 	flag.Parse()
 }
 
-func Sign(i int) int {
-	if i < 0 {
-		return -1
-	}
-	if i > 0 {
-		return 1
-	}
-	return 0
-}
-
 type lineSegment struct {
-	start, end point
+	start, end utils.Point
 }
 
 func (l lineSegment) isVertical() bool {
-	return l.start.x == l.end.x
+	return l.start.X == l.end.X
 }
 
 func (l lineSegment) isHorizontal() bool {
-	return l.start.y == l.end.y
+	return l.start.Y == l.end.Y
 }
 
 func main() {
@@ -70,7 +60,7 @@ func part2(segments []lineSegment) int {
 }
 
 func getOverlaps(segments []lineSegment, includeDiagonals bool) int {
-	counts := make(map[point]int)
+	counts := make(map[utils.Point]int)
 
 	for _, segment := range segments {
 		points := getPointsOfLineSegment(segment, includeDiagonals)
@@ -91,7 +81,7 @@ func getOverlaps(segments []lineSegment, includeDiagonals bool) int {
 	return sum
 }
 
-func getPointsOfLineSegment(segment lineSegment, includeDiagonals bool) (points []point) {
+func getPointsOfLineSegment(segment lineSegment, includeDiagonals bool) (points []utils.Point) {
 	p1 := segment.start
 	p2 := segment.end
 
@@ -116,7 +106,7 @@ func convertToLineSegments(inputs []string) (lineSegments []lineSegment) {
 		}
 		params := utils.MakeMapFromRegex(regex, line)
 
-		lineSegments = append(lineSegments, lineSegment{start: newPoint(params["Start"]), end: newPoint(params["End"])})
+		lineSegments = append(lineSegments, lineSegment{start: utils.NewPoint(params["Start"]), end: utils.NewPoint(params["End"])})
 	}
 
 	return
