@@ -4,6 +4,7 @@ import (
 	"AdventOfCode2021/utils"
 	"flag"
 	"log"
+	"sort"
 	"time"
 )
 
@@ -54,8 +55,7 @@ func part1(lines []string) utils.ResultWithTime {
 	syntaxErrorScore := 0
 
 	for _, line := range lines {
-		if character, isCorrupt := getCorruption(line); isCorrupt {
-			// fmt.Printf("line = %v - %v - %v\n", i, character, points[character])
+		if character, isCorrupt, _ := getCorruption(line); isCorrupt {
 			syntaxErrorScore += points[character]
 		}
 	}
@@ -69,7 +69,7 @@ func part1(lines []string) utils.ResultWithTime {
 	}
 }
 
-func getCorruption(line string) (string, bool) {
+func getCorruption(line string) (string, bool, []string) {
 	c := string(line[0])
 	rest := line[1:]
 
@@ -83,8 +83,10 @@ func getCorruption(line string) (string, bool) {
 	var isCorrupt bool
 	var newRest []string
 
+	var completions []string
+
 	for {
-		char, isCorrupt, newRest = findCorruption(c, t)
+		char, isCorrupt, newRest, completions = findCorruption(c, t, completions)
 		if !isCorrupt && len(newRest) > 0 {
 			c = newRest[0]
 			t = newRest[1:]
@@ -93,37 +95,64 @@ func getCorruption(line string) (string, bool) {
 		}
 	}
 
-	return char, isCorrupt
+	return char, isCorrupt, completions
 }
 
-func findCorruption(c string, rest []string) (string, bool, []string) {
+func findCorruption(c string, rest []string, completions []string) (string, bool, []string, []string) {
 	pairs := make(map[string]string)
 	pairs["("] = ")"
 	pairs["["] = "]"
 	pairs["{"] = "}"
 	pairs["<"] = ">"
 
-	// fmt.Printf("%v - %v\n", c, rest)
-
 	if len(rest) == 0 {
-		return "", false, rest
+		return "", false, rest, append(completions, pairs[c])
 	}
 
 	if _, isOpenning := pairs[rest[0]]; isOpenning {
-		if ch, isCorrupt, newRest := findCorruption(rest[0], rest[1:]); isCorrupt {
-			return ch, isCorrupt, newRest
+		if ch, isCorrupt, newRest, complets := findCorruption(rest[0], rest[1:], completions); isCorrupt {
+			return ch, isCorrupt, newRest, complets
 		} else {
-			return findCorruption(c, newRest)
+			return findCorruption(c, newRest, complets)
 		}
 	} else {
 		if pairs[c] != rest[0] {
-			return rest[0], true, rest
+			return rest[0], true, rest, completions
 		} else {
-			return "", false, rest[1:]
+			return "", false, rest[1:], completions
 		}
 	}
 }
 
-func part2([]string) utils.ResultWithTime {
-	return utils.ResultWithTime{}
+func part2(lines []string) utils.ResultWithTime {
+	t1 := time.Now()
+
+	points := make(map[string]int)
+	points[")"] = 1
+	points["]"] = 2
+	points["}"] = 3
+	points[">"] = 4
+
+	var scores []int
+
+	for _, line := range lines {
+		if _, isCorrupt, completions := getCorruption(line); !isCorrupt {
+			score := 0
+			for _, com := range completions {
+				score *= 5
+				score += points[com]
+			}
+			scores = append(scores, score)
+		}
+	}
+
+	sort.Ints(scores)
+
+	t2 := time.Now()
+	diff := t2.Sub(t1)
+
+	return utils.ResultWithTime{
+		Value:    scores[(len(scores)-1)/2],
+		Duration: diff,
+	}
 }
