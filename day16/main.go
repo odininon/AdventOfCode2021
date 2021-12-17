@@ -33,7 +33,7 @@ func main() {
 		binaryString += fmt.Sprintf("%04b", number)
 	}
 
-	utils.PrintDayResultsWithDuration(16, part1(binaryString), part2(binaryString))
+	utils.PrintDayResultsWithDurationInt64(16, part1(binaryString), part2(binaryString))
 }
 
 func countVersions(b string, subPackets map[string][]string) (int, string, int) {
@@ -120,25 +120,23 @@ func countVersions(b string, subPackets map[string][]string) (int, string, int) 
 	return 0, "", 0
 }
 
-func part1(binaryString string) utils.ResultWithTime {
+func part1(binaryString string) utils.Int64ResultWithTime {
 	subPackets := make(map[string][]string)
 	totalVersions, _, _ := countVersions(binaryString, subPackets)
 
-	return utils.ResultWithTime{
-		Value: totalVersions,
+	return utils.Int64ResultWithTime{
+		Value: int64(totalVersions),
 	}
 }
 
-func part2(binaryString string) utils.ResultWithTime {
+func part2(binaryString string) utils.Int64ResultWithTime {
 	subPackets := make(map[string][]string)
 	countVersions(binaryString, subPackets)
 
 	value := packetValue(binaryString, subPackets)
 
-	fmt.Printf("%v\n", value)
-
-	return utils.ResultWithTime{
-		Value: 0,
+	return utils.Int64ResultWithTime{
+		Value: value,
 	}
 }
 

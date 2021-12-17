@@ -39,7 +39,16 @@ type ResultWithTime struct {
 	Duration time.Duration
 }
 
+type Int64ResultWithTime struct {
+	Value    int64
+	Duration time.Duration
+}
+
 func PrintDayResultsWithDuration(day int, part1 ResultWithTime, part2 ResultWithTime) {
+	PrintDayResultsWithDurationInt64(day, Int64ResultWithTime{int64(part1.Value), part1.Duration}, Int64ResultWithTime{int64(part2.Value), part2.Duration})
+}
+
+func PrintDayResultsWithDurationInt64(day int, part1 Int64ResultWithTime, part2 Int64ResultWithTime) {
 	fmt.Printf("==Day%v==\nPart1: %v, Part2: %v\n", day, part1, part2)
 }
 
