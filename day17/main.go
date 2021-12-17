@@ -33,8 +33,8 @@ func main() {
 
 	maxHeights := make(map[utils.Point]int)
 
-	for x := 0; x <= 5000; x++ {
-		for y := -5000; y <= 5000; y++ {
+	for x := 0; x <= targetArea.bottomRight.X; x++ {
+		for y := targetArea.bottomRight.Y; y <= 500; y++ {
 			velocity := utils.Point{X: x, Y: y}
 			inTrench, maxHeight := tryFiring(startingPoint, targetArea, velocity)
 
