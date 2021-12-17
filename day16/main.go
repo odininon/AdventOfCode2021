@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"math"
 	"strconv"
+	"time"
 )
 
 var (
@@ -17,6 +18,7 @@ func init() {
 }
 
 func main() {
+	t1 := time.Now()
 	var hexString string
 	if *useTestInputs {
 		hexString = "9C0141080250320F1802104A08"
@@ -33,7 +35,10 @@ func main() {
 		binaryString += fmt.Sprintf("%04b", number)
 	}
 
-	utils.PrintDayResultsWithDurationInt64(16, part1(binaryString), part2(binaryString))
+	subPackets := make(map[string][]string)
+	totalVersions, _, _ := countVersions(binaryString, subPackets)
+
+	utils.PrintDayResultsWithDurationInt64(16, part1(totalVersions, t1), part2(binaryString, subPackets, t1))
 }
 
 func countVersions(b string, subPackets map[string][]string) (int, string, int) {
@@ -120,23 +125,25 @@ func countVersions(b string, subPackets map[string][]string) (int, string, int) 
 	return 0, "", 0
 }
 
-func part1(binaryString string) utils.Int64ResultWithTime {
-	subPackets := make(map[string][]string)
-	totalVersions, _, _ := countVersions(binaryString, subPackets)
+func part1(totalVersions int, t1 time.Time) utils.Int64ResultWithTime {
+	t2 := time.Now()
+	diff := t2.Sub(t1)
 
 	return utils.Int64ResultWithTime{
-		Value: int64(totalVersions),
+		Value:    int64(totalVersions),
+		Duration: diff,
 	}
 }
 
-func part2(binaryString string) utils.Int64ResultWithTime {
-	subPackets := make(map[string][]string)
-	countVersions(binaryString, subPackets)
-
+func part2(binaryString string, subPackets map[string][]string, t1 time.Time) utils.Int64ResultWithTime {
 	value := packetValue(binaryString, subPackets)
 
+	t2 := time.Now()
+	diff := t2.Sub(t1)
+
 	return utils.Int64ResultWithTime{
-		Value: value,
+		Value:    value,
+		Duration: diff,
 	}
 }
 
